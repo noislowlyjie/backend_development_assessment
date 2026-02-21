@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CICO Tracker</title>
+</head>
+<body>
+    <h1>CICO Tracker</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Food Name</th>
+                <th>Calories</th>
+                <th>Meal</th>
+                <th>Tags</th>
+                <th>Serving Size</th>
+                <th>Unit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% foodEntries.forEach(function(foodEntry) { %>
+            <tr>
+                <td><%= foodEntry.dateTime %></td>
+                <td><%= foodEntry.foodName %></td>
+                <td><%= foodEntry.calories %></td>
+                <td><%= foodEntry.meal %></td>
+                <td><%= foodEntry.tags %></td>
+                <td><%= foodEntry.servingSize %></td>
+                <td><%= foodEntry.unit %></td>
+                <td>
+                    <a href="/food-entry/<%= foodEntry.id %>/edit">Edit</a>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <a href="/food-entry/add">Add Food Entry</a>
+</body>
+</html>
