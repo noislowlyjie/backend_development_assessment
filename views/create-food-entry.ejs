@@ -8,8 +8,14 @@
 
 <body>
     <h1>Add Food Entry</h1>
-    <%- include("food-entry-form") %>
-    <button type="submit">Add Food Entry</button>
+
+  <form method="POST"> 
+        <%- include('food-entry-form', { 
+            foodEntry: {}, 
+            meals: meals 
+        }) %> 
+        <input type="submit" value="Create Food Entry" /> 
+    </form> 
 
 </body>
 

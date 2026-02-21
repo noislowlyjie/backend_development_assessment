@@ -31,7 +31,8 @@ app.get("/", async (req, res) => {
 //     res.render('create-food-entry');
 // })
 
-app.get("/food-entry/add", function(req, res){
+app.get("/food-entry/add", async function(req, res){
+    const [meals] = await dbConnection.execute("SELECT * FROM meals"); 
     res.render('create-food-entry', {
         foodEntry: {
             dateTime: "",
@@ -41,15 +42,18 @@ app.get("/food-entry/add", function(req, res){
             tags: [],
             servingSize: "",
             unit: ""
-        }
+        },
+        'meals': meals
     });
 });
 
 app.post('/food-entry/add', async (req, res) => {
     const { dateTime, foodName, calories, meal, tags, servingSize, unit } = req.body;
-    const query = "INSERT INTO food_entries (dateTime, foodName, calories, meal, tags, servingSize, unit) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    const query = "INSERT INTO food_entries (dateTime, foodName, calories, meal_id, tags, servingSize, unit) VALUES (?, ?, ?, ?, ?, ?, ?)";
     const values = [dateTime, foodName, calories, meal, JSON.stringify(tags), servingSize, unit];
-    await dbConnection.execute(query, values);
+    // await dbConnection.execute(query, values);
+    const results = await dbConnection.execute(query, values);
+
     res.redirect("/");
 })
 

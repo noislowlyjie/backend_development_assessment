@@ -13,15 +13,13 @@
     </div>
    
     <div>
-        <label>Meal:</label>
-        <input type="radio" name="meal" value="breakfast" <%= foodEntry?.meal === "breakfast" ? "checked" : "" %>>
-        <label>Breakfast</label>
-        <input type="radio" name="meal" value="lunch" <%= foodEntry?.meal === "lunch" ? "checked" : "" %>>
-        <label>Lunch</label>
-        <input type="radio" name="meal" value="dinner" <%= foodEntry?.meal === "dinner" ? "checked" : "" %>>
-        <label>Dinner</label>
-        <input type="radio" name="meal" value="snack" <%= foodEntry?.meal === "snack" ? "checked" : "" %>>
-        <label>Snack</label>
+    <label>Meal:</label>
+    <% for  (let m of meals) { %>
+        <input type="radio" name="meal" value="<%= m.id %>"
+            <%=foodEntry?.meal_id == m.id ? "checked" : "" %>
+        />
+        <label><%= m.name %></label>
+    <% } %>
     </div>
 
     <div>
