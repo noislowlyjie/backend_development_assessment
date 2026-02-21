@@ -22,16 +22,16 @@
         <tbody>
             <% foodEntries.forEach(function(foodEntry) { %>
             <tr>
-                <td><%= foodEntry.dateTime %></td>
-                <td><%= foodEntry.foodName %></td>
-                <td><%= foodEntry.calories %></td>
-                <td><%= foodEntry.meal %></td>
-                <td><%= foodEntry.tags %></td>
-                <td><%= foodEntry.servingSize %></td>
-                <td><%= foodEntry.unit %></td>
+                <td><%= foodEntry.food_entries.dateTime %></td>
+                <td><%= foodEntry.food_entries.foodName %></td>
+                <td><%= foodEntry.food_entries.calories %></td>
+                <td><%= foodEntry.meals.name %></td>
+                <td><%= foodEntry.food_entries.tags %></td>
+                <td><%= foodEntry.food_entries.servingSize %></td>
+                <td><%= foodEntry.food_entries.unit %></td>
                 <td>
-                    <a href="/food-entry/<%= foodEntry.id %>/edit">Edit</a>
-                    <a href="/food-entry/<%= foodEntry.id %>/delete">Delete</a>
+                    <a href="/food-entry/<%= foodEntry.food_entries.id %>/edit">Edit</a>
+                    <a href="/food-entry/<%= foodEntry.food_entries.id %>/delete">Delete</a>
                 </td>
             </tr>
             <% }) %>

@@ -21,6 +21,6 @@ CREATE TABLE food_entries_tags (
 
 INSERT INTO tags (name) VALUES ("Vegan"),
     ("Vegetarian"),
-    ("Glutten Free"),
+    ("Gluten-Free"),
     ("Low carb"),
     ("Low fat");

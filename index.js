@@ -22,9 +22,21 @@ const dbConfig = {
 
 const dbConnection = mysql2.createPool(dbConfig);
 
-app.get("/", async (req, res) => {
-    const [rows] = await dbConnection.query("SELECT * FROM food_entries");
-    res.render("index", { foodEntries: rows });
+app.get('/', async function(req, res){
+    const sql = `SELECT * FROM food_entries JOIN meals ON
+        food_entries.meal_id = meals.id
+    `;
+
+    const results = await dbConnection.execute({
+        sql: sql,
+        nestTables: true
+    });
+
+    const rows = results[0];
+ 
+    res.render('index', {
+        foodEntries: rows
+    })
 });
 
 // app.get("/food-entry/add", function(req,res){
@@ -61,7 +73,8 @@ app.get("/food-entry/:id/edit", async (req, res) => {
     const [rows] = await dbConnection.query("SELECT * FROM food_entries WHERE id = ?", [req.params.id]);
     const foodEntry = rows[0];
     foodEntry.tags = JSON.parse(foodEntry.tags);
-    res.render("edit-food-entry", { foodEntry });
+    const [meals] = await dbConnection.execute("SELECT * FROM meals");
+    res.render("edit-food-entry", { foodEntry, meals });
 })
 
 app.post("/food-entry/:id/edit", async (req, res) => {
