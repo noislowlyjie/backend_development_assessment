@@ -27,9 +27,23 @@ app.get("/", async (req, res) => {
     res.render("index", { foodEntries: rows });
 });
 
-app.get("/food-entry/add", function(req,res){
-    res.render('create-food-entry');
-})
+// app.get("/food-entry/add", function(req,res){
+//     res.render('create-food-entry');
+// })
+
+app.get("/food-entry/add", function(req, res){
+    res.render('create-food-entry', {
+        foodEntry: {
+            dateTime: "",
+            foodName: "",
+            calories: "",
+            meal: "",
+            tags: [],
+            servingSize: "",
+            unit: ""
+        }
+    });
+});
 
 app.post('/food-entry/add', async (req, res) => {
     const { dateTime, foodName, calories, meal, tags, servingSize, unit } = req.body;
@@ -56,6 +70,17 @@ app.post("/food-entry/:id/edit", async (req, res) => {
     await dbConnection.execute(query, values);
     res.redirect("/");
 })
+
+app.get("/food-entry/:id/delete", async (req, res) => {
+    const [rows] = await dbConnection.query("SELECT * FROM food_entries WHERE id = ?", [req.params.id]);
+    res.render("delete-food-entry", { foodEntry: rows[0] });
+})
+
+app.post("/food-entry/:id/delete", async (req, res) => {
+    await dbConnection.execute("DELETE FROM food_entries WHERE id = ?", [req.params.id]);
+    res.redirect("/");
+})
+
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
