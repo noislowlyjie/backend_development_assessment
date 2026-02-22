@@ -1,4 +1,4 @@
-<form method="POST">
+<!-- form wrapper removed; parent view should provide <form> tags -->
     <div>
         <label>Date and Time</label>
         <input type="datetime-local" name="dateTime" value="<%= foodEntry && foodEntry.dateTime ? (new Date(foodEntry.dateTime)).toISOString().slice(0, -1) : '' %>">
@@ -24,34 +24,30 @@
 
     <div>
         <label>Tags:</label>
-        <input type="checkbox" name="tags[]" value="vegan" <%= foodEntry?.tags?.includes("vegan") ? "checked" : "" %>>
-        <label>Vegan</label>
-        <input type="checkbox" name="tags[]" value="vegetarian" <%= foodEntry?.tags?.includes("vegetarian") ? "checked" : "" %>>
-        <label>Vegetarian</label>
-        <input type="checkbox" name="tags[]" value="gluten-free" <%= foodEntry?.tags?.includes("gluten-free") ? "checked" : "" %>>
-        <label>Gluten-Free</label>
-        <input type="checkbox" name="tags[]" value="low-carb" <%= foodEntry?.tags?.includes("low-carb") ? "checked" : "" %>>
-        <label>Low Carb</label>
-        <input type="checkbox" name="tags[]" value="low-fat" <%= foodEntry?.tags?.includes("low-fat") ? "checked" : "" %>>
-        <label>Low Fat</label>
+        <% for (let t of tags) { %> 
+            <input type="checkbox" name="tags[]" value="<%= t.id %>" <%= 
+            relatedTags.includes(t.id) ? "checked" : "" %> 
+            /> 
+            <label><%= t.name %></label> 
+        <% } %> 
     </div>
 
     <div>
         <label>Serving Size</label>
         <input type="number" name="servingSize" value="<%= foodEntry?.servingSize %>">
         <label>Unit</label>
-       <select name="unit">
-                <option value="serving"
-                    <%= foodEntry?.unit == "serving" ? "selected" : "" %>
-                >Serving</option>
-                <option value="gram"
-                     <%= foodEntry?.unit == "gram" ? "selected" : "" %>
-                >Gram</option>
-                <option value="ounce"
-                     <%= foodEntry?.unit == "ounce" ? "selected" : "" %>
-                >Ounce</option>
-                <option value="pound"
-                     <%= foodEntry?.unit == "pound" ? "selected" : "" %>
-                >Pound</option>
+        <select name="unit">
+            <option value="serving"
+            <%= foodEntry?.unit == "serving" ? "selected" : "" %>
+            >Serving</option>
+            <option value="gram"
+            <%= foodEntry?.unit == "gram" ? "selected" : "" %>
+            >Gram</option>
+            <option value="ounce"
+            <%= foodEntry?.unit == "ounce" ? "selected" : "" %>
+            >Ounce</option>
+            <option value="pound"
+            <%= foodEntry?.unit == "pound" ? "selected" : "" %>
+            >Pound</option>
             </select>
     </div>

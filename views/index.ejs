@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CICO Tracker</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
+<div class="container">
     <h1>CICO Tracker</h1>
-    <table>
+
+    <div class="col-12">
+        <%- include("search-form", {
+        tags, searchParams
+        }) %>
+    </div>
+    <a href="/food-entry/add" class="btn btn-primary mb-3">Add Food Entry</a> 
+    <div class="col-12">
+    <table class="table">
         <thead>
             <tr>
                 <th>Date</th>
@@ -22,21 +33,22 @@
         <tbody>
             <% foodEntries.forEach(function(foodEntry) { %>
             <tr>
-                <td><%= foodEntry.food_entries.dateTime %></td>
-                <td><%= foodEntry.food_entries.foodName %></td>
-                <td><%= foodEntry.food_entries.calories %></td>
-                <td><%= foodEntry.meals.name %></td>
-                <td><%= foodEntry.food_entries.tags %></td>
-                <td><%= foodEntry.food_entries.servingSize %></td>
-                <td><%= foodEntry.food_entries.unit %></td>
+                <td><%= foodEntry.dateTime.toISOString().slice(0, 19).replace("T", " ") %></td>
+                <td><%= foodEntry.foodName %></td>
+                <td><%= foodEntry.calories %></td>
+                <td><%= foodEntry.meal %></td>
+                <td><%= foodEntry.selectedTags %></td>
+                <td><%= foodEntry.servingSize %></td>
+                <td><%= foodEntry.unit %></td>
                 <td>
-                    <a href="/food-entry/<%= foodEntry.food_entries.id %>/edit">Edit</a>
-                    <a href="/food-entry/<%= foodEntry.food_entries.id %>/delete">Delete</a>
+                    <a href="/food-entry/<%= foodEntry.id %>/edit" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="/food-entry/<%= foodEntry.id %>/delete" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
             <% }) %>
         </tbody>
     </table>
-    <a href="/food-entry/add">Add Food Entry</a>
+    </div>
+</div>
 </body>
 </html>
